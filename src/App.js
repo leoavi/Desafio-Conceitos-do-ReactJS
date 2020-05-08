@@ -15,8 +15,8 @@ function App() {
 
   async function handleAddRepository() {
     const response = await api.post("repositories", {
-      title: "Magiclevel.com",
-      owner: "Leonardo Avi",
+      title: "ReactJS GoStack",
+      owner: "Leonardo",
     });
 
     const repository = response.data;
@@ -25,28 +25,27 @@ function App() {
   }
 
   async function handleRemoveRepository(id) {
-    const response = await api.delete(`repositories/${id}`);
+    await api.delete(`repositories/${id}`);
 
-    setRepositories((previusRepositories) => {
-      return {
-        repositories: previusRepositories.repositories.filter(
-          (repo) => repo.id !== response.data.id
-        ),
-      };
-    });
+    const Newrepositories = repositories.filter(
+      (repository) => repository.id !== id
+    );
+
+    setRepositories(Newrepositories);
   }
 
   return (
     <div>
       <ul data-testid="repository-list">
         {repositories.map((repository) => {
-          <li id={repository.id}>
-            {repository.title}
-            <button onClick={() => handleRemoveRepository(repository.id)}>
-              Remover
-            </button>
-            ;
-          </li>;
+          return (
+            <>
+              <li>{repository.title}</li>
+              <button onClick={() => handleRemoveRepository(repository.id)}>
+                Remover
+              </button>
+            </>
+          );
         })}
       </ul>
 
